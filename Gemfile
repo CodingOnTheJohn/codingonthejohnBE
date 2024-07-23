@@ -37,17 +37,19 @@ gem 'bootsnap', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'capybara', '~> 3.40'
+  gem 'capybara'
   gem 'debug', platforms: %i[mri windows]
   gem 'faker'
   gem 'jsonapi-serializer'
   gem 'launchy'
   gem 'pry'
   gem 'rspec-rails', '~> 6.1.0'
-  gem 'shoulda-matchers'
   gem 'simplecov'
 end
 
+group :test do
+  gem 'shoulda-matchers', '~> 6.0'
+end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
