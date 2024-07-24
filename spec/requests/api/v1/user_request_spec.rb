@@ -16,6 +16,16 @@ RSpec.describe 'User API', type: :request do
       user = User.last
       expect(user.username).to eq('user1')
     end
+
+    it 'returns an error if user is not created' do
+      user_params = {
+        username: 'user1',
+        email: ''
+      }
+
+      post api_v1_users_path, params: { user: user_params }
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
   end
 
   describe 'GET /api/v1/user/:id' do
