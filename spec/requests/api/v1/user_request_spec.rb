@@ -43,5 +43,12 @@ RSpec.describe 'User API', type: :request do
       json_response = JSON.parse(response.body)
       expect(json_response['data']['attributes']['username']).to eq(user.username)
     end
+
+    it 'returns an error if user is not found' do
+      get '/api/v1/users/1'
+
+      expect(response).to have_http_status(:not_found)
+      expect(response.body).to include("Couldn't find User with 'id'=1")
+    end
   end
 end
