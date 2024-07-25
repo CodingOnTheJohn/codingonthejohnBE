@@ -8,13 +8,17 @@ class Api::V1::UsersController < ApplicationController
     if @user.save
       render json: UserSerializer.new(@user), status: :created
     else
-      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+      render json: ErrorSerializer.new(@user.errors), status: :unprocessable_entity
     end
   end
 
   def show
     @user = User.find(params[:id])
-    render json: UserSerializer.new(@user), status: :ok
+    if @user
+      render json: UserSerializer.new(@user), status: :ok
+    else
+      render json: ErrorSerializer.new(@user.errors), status: :not_found
+    end
   end
 
   private
