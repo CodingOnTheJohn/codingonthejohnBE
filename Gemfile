@@ -40,7 +40,6 @@ group :development, :test do
   gem 'capybara'
   gem 'debug', platforms: %i[mri windows]
   gem 'faker'
-  gem 'jsonapi-serializer'
   gem 'launchy'
   gem 'pry'
   gem 'rspec-rails', '~> 6.1.0'
@@ -54,3 +53,5 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+
+gem 'jsonapi-serializer'
