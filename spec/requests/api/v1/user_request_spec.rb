@@ -66,7 +66,7 @@ RSpec.describe 'User API', type: :request do
         password: "password"
       }
 
-      get api_v1_login_path, params: login_params
+      get api_v1_login_path, params: { user: login_params }
 
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)

@@ -22,9 +22,9 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def login
-    user = User.find_by(email: params[:email])
+    user = User.find_by(email: params[:user][:email])
     if user
-      if user && user.authenticate(params[:password])
+      if user && user.authenticate(params[:user][:password])
         render json: UserSerializer.new(user), status: :ok
       else
         render json: ErrorSerializer.new(user.errors), status: :unprocessable_entity
