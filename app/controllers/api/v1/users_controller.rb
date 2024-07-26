@@ -21,9 +21,22 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def login
+    user = User.find_by(email: params[:user][:email])
+    if user
+      if user && user.authenticate(params[:user][:password])
+        render json: UserSerializer.new(user), status: :ok
+      else
+        render json: ErrorSerializer.new({ message: 'Invalid password' }), status: :unauthorized
+      end
+    else
+      render json: ErrorSerializer.new({ message: 'User not found' }), status: :not_found
+    end
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:password, :password_confirmation, :username, :email)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation)
   end
 end
