@@ -27,10 +27,10 @@ class Api::V1::UsersController < ApplicationController
       if user && user.authenticate(params[:user][:password])
         render json: UserSerializer.new(user), status: :ok
       else
-        render json: ErrorSerializer.new(user.errors), status: :unprocessable_entity
+        render json: ErrorSerializer.new({ message: 'Invalid password' }), status: :unauthorized
       end
     else
-      render json: ErrorSerializer.new(user.errors), status: :not_found
+      render json: ErrorSerializer.new({ message: 'User not found' }), status: :not_found
     end
   end
 

@@ -72,5 +72,35 @@ RSpec.describe 'User API', type: :request do
       json_response = JSON.parse(response.body)
       expect(json_response['data']['attributes']['username']).to eq('user1')
     end
+
+    it 'returns an error if user is not found' do
+      login_params = {
+        email: "user1@test.com",
+        password: "password"
+      }
+
+      get api_v1_login_path, params: { user: login_params }
+      expect(response).to have_http_status(:not_found)
+      expect(response.body).to include("User not found")
+    end
+
+    it 'returns an error if password is invalid' do
+      user = User.create(
+        username: 'user1',
+        email: 'user1@test.com',
+        password: 'password',
+        password_confirmation: 'password'
+      )
+
+      login_params = {
+        email: "user1@test.com",
+        password: "passwor"
+      }
+
+      get api_v1_login_path, params: { user: login_params }
+
+      expect(response).to have_http_status(:unauthorized)
+      expect(response.body).to include("Invalid password")
+    end
   end
 end
