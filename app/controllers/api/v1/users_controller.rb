@@ -21,9 +21,22 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def login
+    user = User.find_by(email: params[:email])
+    if user
+      if user && user.authenticate(params[:password])
+        render json: UserSerializer.new(user), status: :ok
+      else
+        render json: ErrorSerializer.new(user.errors), status: :unprocessable_entity
+      end
+    else
+      render json: ErrorSerializer.new(user.errors), status: :not_found
+    end
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:password, :password_confirmation, :username, :email)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation)
   end
 end

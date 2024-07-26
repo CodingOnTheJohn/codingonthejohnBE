@@ -51,4 +51,26 @@ RSpec.describe 'User API', type: :request do
       expect(response.body).to include("Couldn't find User with 'id'=1")
     end
   end
+
+  describe 'Get /api/v1/login' do
+    it 'allows an existing user to login' do
+      user = User.create(
+        username: 'user1',
+        email: 'user1@test.com',
+        password: 'password',
+        password_confirmation: 'password'
+      )
+
+      login_params = {
+        email: "user1@test.com",
+        password: "password"
+      }
+
+      get api_v1_login_path, params: login_params
+
+      expect(response).to have_http_status(:ok)
+      json_response = JSON.parse(response.body)
+      expect(json_response['data']['attributes']['username']).to eq('user1')
+    end
+  end
 end
