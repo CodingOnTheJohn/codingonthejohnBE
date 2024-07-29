@@ -72,3 +72,8 @@ RSpec.configure do |config|
   # omnioauth test for rspec
 end
 
+require 'webmock/rspec'
+
+RSpec.configure do |config|
+  config.include WebMock::API
+end

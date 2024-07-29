@@ -44,6 +44,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-rails', '~> 6.1.0'
   gem 'simplecov'
+  gem 'webmock'
 end
 
 group :test do

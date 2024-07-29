@@ -35,13 +35,13 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def github
-    redirect_to "https://github.com/login/oauth/authorize?client_id=#{Rails.credentials.github['client_id']}&scope=user:email"
+    redirect_to "https://github.com/login/oauth/authorize?client_id=#{Rails.application.credentials.github['client_id']}&scope=user:email", allow_other_host: true
   end
 
   def github_callback
     code = params[:code]
-    client_id = Rails.credentials.github['client_id']
-    client_secret = Rails.credentials.github['client_secret']
+    client_id = Rails.application.credentials.github['client_id']
+    client_secret = Rails.application.credentials.github['client_secret']
 
     conn = Faraday.new(url: 'https://github.com', headers: { 'Accept' => 'application/json' })
 
