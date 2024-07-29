@@ -5,7 +5,14 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  # def self.from_omniauth(auth)
-
-  # end
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_initialize do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.username = auth.info.nickname
+      user.email = auth.info.email
+      user.password = SecureRandom.hex(10) if user.password_digest.nil?
+      user.save!
+    end
+  end
 end

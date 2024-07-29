@@ -11,8 +11,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[new create show]
 
-      get '/login', to: "users#login"
-      get '/auth/:provider/callback', to: "users#github"
+      get '/login', to: "sessions#create"
+      get '/auth/:provider/callback', to: 
     end
   end
 end
