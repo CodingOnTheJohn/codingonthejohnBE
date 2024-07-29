@@ -69,6 +69,11 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  OmniAuth.config.test_mode = true
   # omnioauth test for rspec
+end
+
+# spec/rails_helper.rb
+RSpec.configure do |config|
+  OmniAuth.config.test_mode = true
+  config.include Rack::Test::Methods, type: :request
 end
