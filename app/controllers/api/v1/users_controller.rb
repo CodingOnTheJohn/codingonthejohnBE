@@ -34,9 +34,22 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def github
+    auth = request.env['omniauth.auth']
+    @user = User.find_or_create_by(uid: auth['uid']) do |uid|
+      uid.username = auth['info']['nickname']
+      uid.email = auth['info']['email']
+      uid.password = SecureRandom.hex(10)
+    end
+
+    render json: UserSerializer.new(@user), status: :ok
+  end
+
+
   private
 
   def user_params
     params.require(:user).permit(:username, :email, :password, :password_confirmation)
   end
+
 end
