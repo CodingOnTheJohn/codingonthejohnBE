@@ -34,6 +34,40 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def github
+    redirect_to "https://github.com/login/oauth/authorize?client_id=#{Rails.application.credentials.github['client_id']}&scope=user:email", allow_other_host: true
+  end
+
+  def github_callback
+    code = params[:code]
+    client_id = Rails.application.credentials.github['client_id']
+    client_secret = Rails.application.credentials.github['client_secret']
+
+    conn = Faraday.new(url: 'https://github.com', headers: { 'Accept' => 'application/json' })
+
+    response = conn.post('/login/oauth/access_token') do |req|
+      req.params['client_id'] = client_id
+      req.params['client_secret'] = client_secret
+      req.params['code'] = code
+    end
+
+    data = JSON.parse(response.body, symbolize_names: true)
+    access_token = data[:access_token]
+
+    conn = Faraday.new(url: 'https://api.github.com', headers: { 'Authorization': "token #{access_token}"})
+
+    response = conn.get('/user')
+    user_info = JSON.parse(response.body, symbolize_names: true)
+    user = User.find_or_create_by(uid: user_info[:id], provider: 'github')
+    user.username = user_info[:login]
+    user.email = user_info[:email]
+    user.password = SecureRandom.hex(10)
+    user.save
+
+    render json: UserSerializer.new(user), status: :ok
+  end
+
+
   private
 
   def user_params

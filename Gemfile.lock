@@ -96,6 +96,9 @@ GEM
     coderay (1.1.3)
     concurrent-ruby (1.3.3)
     connection_pool (2.4.1)
+    crack (1.0.0)
+      bigdecimal
+      rexml
     crass (1.0.6)
     date (3.3.4)
     debug (1.9.2)
@@ -107,8 +110,14 @@ GEM
     erubi (1.13.0)
     faker (3.4.2)
       i18n (>= 1.8.11, < 2)
+    faraday (2.10.0)
+      faraday-net_http (>= 2.0, < 3.2)
+      logger
+    faraday-net_http (3.1.1)
+      net-http
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hashdiff (1.1.0)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     io-console (0.7.2)
@@ -120,6 +129,7 @@ GEM
     launchy (3.0.1)
       addressable (~> 2.8)
       childprocess (~> 5.0)
+    logger (1.6.0)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -135,6 +145,8 @@ GEM
     minitest (5.24.1)
     msgpack (1.7.2)
     mutex_m (0.2.0)
+    net-http (0.4.1)
+      uri
     net-imap (0.4.14)
       date
       net-protocol
@@ -210,6 +222,8 @@ GEM
     regexp_parser (2.9.2)
     reline (0.5.9)
       io-console (~> 0.5)
+    rexml (3.3.2)
+      strscan
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.1)
@@ -236,10 +250,16 @@ GEM
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
     stringio (3.1.1)
+    strscan (3.1.0)
     thor (1.3.1)
     timeout (0.4.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uri (0.13.0)
+    webmock (3.23.1)
+      addressable (>= 2.8.0)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
     webrick (1.8.1)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -262,6 +282,7 @@ DEPENDENCIES
   capybara
   debug
   faker
+  faraday
   jsonapi-serializer
   launchy
   pg (~> 1.1)
@@ -272,6 +293,7 @@ DEPENDENCIES
   shoulda-matchers (~> 6.0)
   simplecov
   tzinfo-data
+  webmock
 
 RUBY VERSION
    ruby 3.2.2p53
