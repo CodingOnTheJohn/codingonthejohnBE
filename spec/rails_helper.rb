@@ -72,8 +72,3 @@ RSpec.configure do |config|
   # omnioauth test for rspec
 end
 
-# spec/rails_helper.rb
-RSpec.configure do |config|
-  OmniAuth.config.test_mode = true
-  config.include Rack::Test::Methods, type: :request
-end

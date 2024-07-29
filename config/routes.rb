@@ -11,8 +11,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[new create show]
 
-      get '/login', to: "sessions#create"
-      get '/auth/:provider/callback', to: "sessions#create"
+      get '/login', to: "users#login"
+      get '/auth/github', to: "users#github"
+      get '/auth/github/callback', to: "users#github_callback"
       # delete '/logout', to: "sessions#destroy"
     end
   end

@@ -21,29 +21,51 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  # def login
-  #   user = User.find_by(email: params[:user][:email])
-  #   if user
-  #     if user && user.authenticate(params[:user][:password])
-  #       render json: UserSerializer.new(user), status: :ok
-  #     else
-  #       render json: ErrorSerializer.new({ message: 'Invalid password' }), status: :unauthorized
-  #     end
-  #   else
-  #     render json: ErrorSerializer.new({ message: 'User not found' }), status: :not_found
-  #   end
-  # end
+  def login
+    user = User.find_by(email: params[:user][:email])
+    if user
+      if user && user.authenticate(params[:user][:password])
+        render json: UserSerializer.new(user), status: :ok
+      else
+        render json: ErrorSerializer.new({ message: 'Invalid password' }), status: :unauthorized
+      end
+    else
+      render json: ErrorSerializer.new({ message: 'User not found' }), status: :not_found
+    end
+  end
 
-  # def github
-  #   auth = request.env['omniauth.auth']
-  #   @user = User.find_or_create_by(uid: auth['uid']) do |uid|
-  #     uid.username = auth['info']['nickname']
-  #     uid.email = auth['info']['email']
-  #     uid.password = SecureRandom.hex(10)
-  #   end
+  def github
+    redirect_to "https://github.com/login/oauth/authorize?client_id=#{Rails.credentials.github['client_id']}&scope=user:email"
+  end
 
-  #   render json: UserSerializer.new(@user), status: :ok
-  # end
+  def github_callback
+    code = params[:code]
+    client_id = Rails.credentials.github['client_id']
+    client_secret = Rails.credentials.github['client_secret']
+
+    conn = Faraday.new(url: 'https://github.com', headers: { 'Accept' => 'application/json' })
+
+    response = conn.post('/login/oauth/access_token') do |req|
+      req.params['client_id'] = client_id
+      req.params['client_secret'] = client_secret
+      req.params['code'] = code
+    end
+
+    data = JSON.parse(response.body, symbolize_names: true)
+    access_token = data[:access_token]
+
+    conn = Faraday.new(url: 'https://api.github.com', headers: { 'Authorization': "token #{access_token}"})
+
+    response = conn.get('/user')
+    user_info = JSON.parse(response.body, symbolize_names: true)
+    user = User.find_or_create_by(uid: user_info[:id], provider: 'github')
+    user.username = user_info[:login]
+    user.email = user_info[:email]
+    user.password = SecureRandom.hex(10)
+    user.save
+
+    render json: UserSerializer.new(user), status: :ok
+  end
 
 
   private
@@ -51,5 +73,4 @@ class Api::V1::UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:username, :email, :password, :password_confirmation)
   end
-
 end
