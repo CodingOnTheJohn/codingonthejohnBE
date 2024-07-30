@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_29_134831) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_30_033719) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_29_134831) do
     t.datetime "updated_at", null: false
     t.string "provider"
     t.string "uid"
+    t.string "phone_number"
+    t.boolean "text_preference", default: false
   end
 
 end
