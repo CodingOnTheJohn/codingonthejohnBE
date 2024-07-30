@@ -61,3 +61,10 @@ gem 'faraday'
 # gem 'omniauth'
 # gem "omniauth-rails_csrf_protection"
 # gem 'omniauth-github'
+
+
+# Daily SMS Reminder
+gem 'twilio-ruby'
+gem 'sidekiq'
+gem 'sidekiq-cron'
+gem 'redis'

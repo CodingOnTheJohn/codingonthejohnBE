@@ -108,6 +108,8 @@ GEM
     docile (1.4.0)
     drb (2.2.1)
     erubi (1.13.0)
+    et-orbi (1.2.11)
+      tzinfo
     faker (3.4.2)
       i18n (>= 1.8.11, < 2)
     faraday (2.10.0)
@@ -115,6 +117,9 @@ GEM
       logger
     faraday-net_http (3.1.1)
       net-http
+    fugit (1.11.0)
+      et-orbi (~> 1, >= 1.2.11)
+      raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashdiff (1.1.0)
@@ -126,6 +131,8 @@ GEM
       reline (>= 0.4.2)
     jsonapi-serializer (2.2.0)
       activesupport (>= 4.2)
+    jwt (2.8.2)
+      base64
     launchy (3.0.1)
       addressable (~> 2.8)
       childprocess (~> 5.0)
@@ -178,6 +185,7 @@ GEM
     public_suffix (6.0.1)
     puma (6.4.2)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.8.0)
     rack (3.1.7)
     rack-session (2.0.0)
@@ -219,6 +227,10 @@ GEM
     rake (13.2.1)
     rdoc (6.7.0)
       psych (>= 4.0.0)
+    redis (5.2.0)
+      redis-client (>= 0.22.0)
+    redis-client (0.22.2)
+      connection_pool
     regexp_parser (2.9.2)
     reline (0.5.9)
       io-console (~> 0.5)
@@ -243,6 +255,16 @@ GEM
     rspec-support (3.13.1)
     shoulda-matchers (6.2.0)
       activesupport (>= 5.2.0)
+    sidekiq (7.3.0)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      logger
+      rack (>= 2.2.4)
+      redis-client (>= 0.22.2)
+    sidekiq-cron (1.12.0)
+      fugit (~> 1.8)
+      globalid (>= 1.0.1)
+      sidekiq (>= 6)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -253,6 +275,10 @@ GEM
     strscan (3.1.0)
     thor (1.3.1)
     timeout (0.4.1)
+    twilio-ruby (7.2.3)
+      faraday (>= 0.9, < 3.0)
+      jwt (>= 1.5, < 3.0)
+      nokogiri (>= 1.6, < 2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (0.13.0)
@@ -289,9 +315,13 @@ DEPENDENCIES
   pry
   puma (>= 5.0)
   rails (~> 7.1.3, >= 7.1.3.4)
+  redis
   rspec-rails (~> 6.1.0)
   shoulda-matchers (~> 6.0)
+  sidekiq
+  sidekiq-cron
   simplecov
+  twilio-ruby
   tzinfo-data
   webmock
 
