@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get '/auth/github', to: "users#github"
       get '/auth/github/callback', to: "users#github_callback"
       
+      mount Sidekiq::Web => '/sidekiq'
     end
   end
 end
