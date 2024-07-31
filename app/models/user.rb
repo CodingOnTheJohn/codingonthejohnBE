@@ -5,4 +5,7 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  def self.text_opt_in
+    where(text_preference: true)
+  end
 end
