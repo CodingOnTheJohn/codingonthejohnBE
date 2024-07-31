@@ -67,6 +67,15 @@ class Api::V1::UsersController < ApplicationController
     render json: UserSerializer.new(user), status: :ok
   end
 
+  # def github_callback
+  #   auth_hash = request.env['omniauth.auth']
+  #   binding.pry
+  #   uid = auth_hash['uid']
+  #   email = auth_hash['info']['email']
+
+  #   @user = User.find_or_create_by(uid: uid, provider: 'github')
+  #   binding.pry
+  # end
 
   private
 
