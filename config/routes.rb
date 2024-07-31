@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[new create show]
 
       get '/login', to: "users#login"
-      post '/auth/github', to: "users#github"
+      get '/auth/github', to: "users#github"
       get '/auth/github/callback', to: "users#github_callback"
       
     end
