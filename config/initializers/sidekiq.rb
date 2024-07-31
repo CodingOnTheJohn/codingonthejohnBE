@@ -12,7 +12,7 @@ end
 schedule = {
   'sms_reminder' => {
     'class' => 'SmsReminderJob',
-    'cron' => '0 12 * * *',
+    'cron' => '30 12 * * *',
     'queue' => 'default'
   }
 }
