@@ -1,4 +1,3 @@
-require 'sidekiq/web'
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -13,11 +12,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[new create show]
 
       get '/login', to: "users#login"
-      # get '/auth/github', to: "users#github"
-      # get '/auth/github/callback', to: "users#github_callback"
       post '/github_users', to: "users#create_github_user"
-      
-      mount Sidekiq::Web => '/sidekiq'
     end
   end
 end
