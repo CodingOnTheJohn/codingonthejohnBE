@@ -54,7 +54,7 @@ RSpec.describe 'User API', type: :request do
 
   describe 'Get /api/v1/login' do
     it 'allows an existing user to login' do
-      user = User.create(
+      User.create(
         username: 'user1',
         email: 'user1@test.com',
         password: 'password',
@@ -85,7 +85,7 @@ RSpec.describe 'User API', type: :request do
     end
 
     it 'returns an error if password is invalid' do
-      user = User.create(
+      User.create(
         username: 'user1',
         email: 'user1@test.com',
         password: 'password',
@@ -101,6 +101,48 @@ RSpec.describe 'User API', type: :request do
 
       expect(response).to have_http_status(:unauthorized)
       expect(response.body).to include("Invalid password")
+    end
+  end
+  describe 'POST /api/v1/github_users' do
+    let(:github_user) do
+      {
+        user: {
+          username: 'ghuser',
+          email: 'ghusertest@test.com',
+          password: 'password',
+          uid: '123456'
+        }
+      }
+    end
+    it 'creates a new user from github oauth' do
+      expect { post '/api/v1/github_users', params: github_user }.to change(User, :count).by(1)
+      expect(response).to have_http_status(:ok)
+    end
+    it 'returns an existing user from github oauth if it already exist' do
+      User.create!(github_user[:user])
+
+      expect { post '/api/v1/github_users', params: github_user }.to_not change(User, :count)
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
+    describe 'sad path/ error handling' do
+      let(:bad_params) do
+        {
+          user: {
+            username: 'badparamsuser',
+            email: '',
+            password: '2342d3g3d',
+            uid: '12425'
+          }
+        }
+      end
+    it 'returns an error if user is not created' do
+        post '/api/v1/github_users', params: bad_params
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        json = JSON.parse(response.body, symbolize_names: true)
+        expect(json[:error_object][:message]).to eq("Validation failed: Email can't be blank")
     end
   end
 end
