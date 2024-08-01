@@ -35,16 +35,20 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create_github_user
-    user = User.find_or_initialize_by(uid: params[:user][:uid])
+    begin
+      user = User.find_or_initialize_by(uid: params[:user][:uid])
 
-    if user.new_record?
-      user.username = params[:user][:username]
-      user.email = params[:user][:email]
-      user.password = params[:user][:password]
-      user.save!
+      if user.new_record?
+        user.username = params[:user][:username]
+        user.email = params[:user][:email]
+        user.password = params[:user][:password]
+        user.save!
+      end
+
+      render json: UserSerializer.new(user), status: :ok
+    rescue ActiveRecord::RecordInvalid => e
+      render json: ErrorSerializer.new({ message: e.message }), status: :unprocessable_entity
     end
-
-    render json: UserSerializer.new(user), status: :ok
   end
 
 
