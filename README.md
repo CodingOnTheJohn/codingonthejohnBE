@@ -19,7 +19,7 @@ This API was built to service the codesnacks application. This can be found [her
 | GET    | /users/{id}      | Show a user's details         | Path Parameter (`id`)                        | `UserResponse` (200)   |
 | GET    | /login           | Login a user                  | Query Parameters (`user[email]`, `user[password]`) | `UserResponse` (200)    |
 | GET    | /login           | Login a user                  | Query Parameters (`user[email]`, `user[password]`) | `UserResponse` (200)    |
-| POST   | /github_users    | Github login/create account   |                                              |  `UserResponse` (201)  |
+| POST   | /github_users    | Github login/create account   |  none                                        |  `UserResponse` (201)  |
 
 #### post `/users`
 body 
