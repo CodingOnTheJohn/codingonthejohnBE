@@ -19,6 +19,52 @@ This API was built to service the codesnacks application. This can be found [her
 | GET    | /users/{id}      | Show a user's details         | Path Parameter (`id`)                        | `UserResponse` (200)    |
 | GET    | /login           | Login a user                  | Query Parameters (`user[email]`, `user[password]`) | `UserResponse` (200)    |
 
+
+#### post /users
+body 
+```
+{
+  users{
+    username: 'example',
+    email: 'example@example.com',
+    phone_number: '123465789',
+    text_preference: true,
+    password: 'password',
+    password_confirmation: 'password'
+  }
+}
+```
+note: password and password confirmation must match
+
+200 response
+```
+{
+  "data": {
+    "id": "example",
+    "type": "example",
+    "attributes": {
+      "email": "example@example.com",
+      "username": "example",
+      "id": 42
+    }
+  }
+}
+```
+
+422 response
+```
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+```
+
+#### get user
+
 ## Database Diagram
 
 ![diagram](https://github.com/CodingOnTheJohn/codingonthejohnBE/blob/main/Untitled%20from%20dbdiagram.png)
@@ -32,6 +78,8 @@ This API was built to service the codesnacks application. This can be found [her
 - `bundle install`
 - `rails db:setup`
 - `rails db:migrate`
+- run `redis server`
+- run `rails server`
 
 How to run the test suite
 
@@ -55,6 +103,3 @@ How to run the test suite
   - [Github](https://github.com/GBowman1)
   - [Linkedin](https://www.linkedin.com/in/gbowman3/)
 
-## Contributing
-
-Since this is a service serving a larger application, this project is not currently accepting external contributions.
