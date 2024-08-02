@@ -20,7 +20,7 @@ This API was built to service the codesnacks application. This can be found [her
 | GET    | /login           | Login a user                  | Query Parameters (`user[email]`, `user[password]`) | `UserResponse` (200)    |
 
 
-#### post /users
+#### post `/users`
 body 
 ```
 {
@@ -37,6 +37,7 @@ body
 note: password and password confirmation must match
 
 200 response
+
 ```
 {
   "data": {
@@ -63,7 +64,95 @@ note: password and password confirmation must match
 }
 ```
 
-#### get user
+#### get user `/users/{id}`
+
+200 response
+```
+{
+  "data": {
+    "id": "example",
+    "type": "example",
+    "attributes": {
+      "email": "example@example.com",
+      "username": "example",
+      "id": 42
+    }
+  }
+}
+```
+
+404 response
+```
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+```
+
+#### User Login, get `/login`
+request must include query paramaters of email and password
+
+if user is found and username and password match a user will be returned
+```
+{
+  "data": {
+    "id": "example",
+    "type": "example",
+    "attributes": {
+      "email": "example@example.com",
+      "username": "example",
+      "id": 42
+    }
+  }
+}
+```
+
+if no matching user is found(404) or password is incorrect(401) you will recieve an error
+```
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+```
+
+#### Login/create Github User, post `/github_user`
+this will redirect you to github where you will be asked to login with your github account and authorize access to your account
+
+if successful
+```
+{
+  "data": {
+    "id": "example",
+    "type": "example",
+    "attributes": {
+      "email": "example@example.com",
+      "username": "example",
+      "id": 42
+    }
+  }
+}
+```
+
+if not you will recieve an error
+```
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+```
+
 
 ## Database Diagram
 
@@ -81,7 +170,7 @@ note: password and password confirmation must match
 - run `redis server`
 - run `rails server`
 
-How to run the test suite
+to run the test suite
 
 - `bundle exec rspec`
 
