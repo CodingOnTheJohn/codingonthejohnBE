@@ -19,6 +19,9 @@ This API was built to service the codesnacks application. This can be found [her
 | GET    | /users/{id}      | Show a user's details         | Path Parameter (`id`)                        | `UserResponse` (200)    |
 | GET    | /login           | Login a user                  | Query Parameters (`user[email]`, `user[password]`) | `UserResponse` (200)    |
 
+## Database Diagram
+
+![diagram](https://github.com/CodingOnTheJohn/codingonthejohnBE/blob/main/Untitled%20from%20dbdiagram.png)
 
 ## Setup
 
