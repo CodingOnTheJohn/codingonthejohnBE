@@ -15,10 +15,11 @@ This API was built to service the codesnacks application. This can be found [her
 
 | Method | Endpoint         | Description                    | Parameters                                  | Response                |
 |--------|-----------------|--------------------------------|----------------------------------------------|------------------------|
-| POST   | /users           | Create a new user             | Request Body (`User`)                        | `UserResponse` (201)    |
-| GET    | /users/{id}      | Show a user's details         | Path Parameter (`id`)                        | `UserResponse` (200)    |
+| POST   | /users           | Create a new user             | Request Body (`User`)                        | `UserResponse` (201)   |
+| GET    | /users/{id}      | Show a user's details         | Path Parameter (`id`)                        | `UserResponse` (200)   |
 | GET    | /login           | Login a user                  | Query Parameters (`user[email]`, `user[password]`) | `UserResponse` (200)    |
-
+| GET    | /login           | Login a user                  | Query Parameters (`user[email]`, `user[password]`) | `UserResponse` (200)    |
+| POST   | /github_users    | Github login/create account   |                                              |  `UserResponse` (201)  |
 
 #### post `/users`
 body 
@@ -123,7 +124,7 @@ if no matching user is found(404) or password is incorrect(401) you will recieve
 }
 ```
 
-#### Login/create Github User, post `/github_user`
+#### Login/create Github User, post `/github_users`
 this will redirect you to github where you will be asked to login with your github account and authorize access to your account
 
 if successful
