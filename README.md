@@ -8,6 +8,8 @@ This API was built to service the codesnacks application. This can be found [her
 ## Documentation
 
 -  [docs](https://bump.sh/codesnacks/hub/codesnacks/doc/users-api)
+-  [Frontend](https://github.com/CodingOnTheJohn/consultancyFE)
+-  [Lessons API](https://github.com/CodingOnTheJohn/codinglessonsapi)
 
 ## Endpoints
 
